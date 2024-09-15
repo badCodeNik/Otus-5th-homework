@@ -1,21 +1,23 @@
-﻿namespace SaveSystem.Storages
-{
-    public class ResourceStorage : ISaveLoader
-    {
-        public void LoadGame()
-        {
-            
-        }
+﻿using System;
 
-        public void SaveGame()
+namespace SaveSystem.Storages
+{
+    [Serializable]
+    public class ResourceStorage : IStorage
+    {
+        private ResourceData resourceData;
+        
+        public ResourceData ResourceData => resourceData;
+
+        public void SetupData(ResourceData resourceData)
         {
-            
+            this.resourceData = resourceData;
         }
     }
 
-    public interface ISaveLoader
+    public struct ResourceData
     {
-        void LoadGame();
-        void SaveGame();
+        public int Stone;
+        public int Wood;
     }
 }
