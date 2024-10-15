@@ -1,15 +1,32 @@
-﻿using SaveSystem.Storages;
+﻿using System;
+using System.Collections.Generic;
 
-namespace SaveSystem.SaveLoaders
+namespace SaveSystem.Storages
 {
+    [Serializable]
     public class UnitStorage : IStorage
     {
-        
+        private UnitListData unitListData;
+        public UnitListData UnitListData => unitListData;
+
+        public void SetupData(UnitListData unitListData)
+        {
+            this.unitListData = unitListData;
+        }
     }
 
-    public struct UnitData
+    [Serializable]
+    public class UnitListData
     {
-        public int NumberOfUnits;
-        public Vector3Data Vector3Data;
+        public List<UnitData> units = new();
+    }
+
+    [Serializable]
+    public class UnitData
+    {
+        public string type;
+        public int hitPoints;
+        public Vector3Data position;
+        public Vector3Data rotation;
     }
 }

@@ -1,23 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace SaveSystem.Storages
 {
     [Serializable]
     public class ResourceStorage : IStorage
     {
-        private ResourceData resourceData;
-        
-        public ResourceData ResourceData => resourceData;
+        private ResourceListData resourceListData;
 
-        public void SetupData(ResourceData resourceData)
+        public ResourceListData ResourceListData => resourceListData;
+
+        public void SetupData(ResourceListData resourceData)
         {
-            this.resourceData = resourceData;
+            this.resourceListData = resourceData;
+            Debug.Log(this.resourceListData.resources.Count);
         }
     }
 
-    public struct ResourceData
+    [Serializable]
+    public class ResourceData
     {
-        public int Stone;
-        public int Wood;
+        public string id;
+        public int amount;
+    }
+
+    [Serializable]
+    public class ResourceListData
+    {
+        public List<ResourceData> resources = new List<ResourceData>();
     }
 }

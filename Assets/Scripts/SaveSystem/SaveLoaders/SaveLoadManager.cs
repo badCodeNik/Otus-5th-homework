@@ -1,4 +1,6 @@
 ﻿using Sirenix.OdinInspector;
+using UnityEngine;
+using Zenject;
 
 namespace SaveSystem.SaveLoaders
 {
@@ -7,7 +9,7 @@ namespace SaveSystem.SaveLoaders
         private readonly ISaveLoader[] saveLoaders;
         private readonly GameRepository gameRepository;
 
-
+        [Inject]
         public SaveLoadManager(ISaveLoader[] saveLoaders, GameRepository gameRepository)
         {
             this.saveLoaders = saveLoaders;
@@ -22,14 +24,14 @@ namespace SaveSystem.SaveLoaders
             {
                 saveLoader.SaveGame();
             }    
-            gameRepository.SaveState();
+            gameRepository.SaveData();
         }
 
         
         [Button]
         public void LoadGame()
         {
-            gameRepository.LoadState();
+            gameRepository.LoadData();
             
             foreach (var saveLoader in saveLoaders)
             {

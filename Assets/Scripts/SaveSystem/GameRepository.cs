@@ -6,13 +6,13 @@ namespace SaveSystem
 {
     public class GameRepository : IGameRepository
     {
-        private Dictionary<string, string> _gameState = new();
+        private Dictionary<string, string> _gameData = new();
 
         public bool TryGetData<T>(out T data)
         {
             var key = typeof(T).ToString();
 
-            if (_gameState.TryGetValue(key, out var jsonData))
+            if (_gameData.TryGetValue(key, out var jsonData))
             {
                 data = JsonConvert.DeserializeObject<T>(jsonData);
                 return true;
@@ -26,24 +26,23 @@ namespace SaveSystem
         {
             var jsonData = JsonConvert.SerializeObject(data);
             var key = typeof(T).ToString();
-            _gameState[key] = jsonData;
+            _gameData[key] = jsonData;
         }
 
-        public void LoadState()
+        public void LoadData()
         {
-            if (PlayerPrefs.HasKey(GameStateKey))
+            if (PlayerPrefs.HasKey(Constants.GameStateKey))
             {
-                var gameStateJson = PlayerPrefs.GetString(GameStateKey);
-                _gameState = JsonConvert.DeserializeObject<Dictionary<string, string>>(gameStateJson);
+                var gameStateJson = PlayerPrefs.GetString(Constants.GameStateKey);
+                _gameData = JsonConvert.DeserializeObject<Dictionary<string, string>>(gameStateJson);
             }
         }
 
-        private const string GameStateKey = "gameStateKey";
 
-        public void SaveState()
+        public void SaveData()
         {
-            var gameStateJson = JsonConvert.SerializeObject(_gameState);
-            PlayerPrefs.SetString(GameStateKey, gameStateJson);
+            var gameStateJson = JsonConvert.SerializeObject(_gameData);
+            PlayerPrefs.SetString(Constants.GameStateKey, gameStateJson);
         }
     }
 }
